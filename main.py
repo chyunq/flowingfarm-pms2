@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
+from excel_reader import OrderReader
 
 class FlowingFarmApp:
 
@@ -89,51 +90,30 @@ class FlowingFarmApp:
 
             return
 
-        self.output.delete(1.0, tk.END)
+reader = OrderReader()
 
-        self.output.insert(tk.END, "=" * 60 + "\n")
-        self.output.insert(tk.END, "플로잉팜 생산관리\n")
-        self.output.insert(tk.END, "=" * 60 + "\n\n")
+reader.load(self.order_file)
 
-        self.output.insert(
-            tk.END,
-            f"선택된 발주파일\n\n{self.order_file}\n\n"
-        )
+result = reader.summary()
 
-        self.output.insert(
-            tk.END,
-            "다음 버전에서 자동으로\n"
-        )
+self.output.delete(1.0, tk.END)
 
-        self.output.insert(
-            tk.END,
-            "- 무농약콩나물 집계\n"
-        )
+self.output.insert(tk.END, "===== 주문 집계 =====\n\n")
 
-        self.output.insert(
-            tk.END,
-            "- GAP콩나물 집계\n"
-        )
+self.output.insert(
+    tk.END,
+    f"무농약콩나물 : {result['무농약콩나물']:.1f} kg\n"
+)
 
-        self.output.insert(
-            tk.END,
-            "- GAP숙주 집계\n"
-        )
+self.output.insert(
+    tk.END,
+    f"GAP콩나물 : {result['GAP콩나물']:.1f} kg\n"
+)
 
-        self.output.insert(
-            tk.END,
-            "- 콩 필요량 계산\n"
-        )
-
-        self.output.insert(
-            tk.END,
-            "- 생산계획 엑셀 생성\n"
-        )
-
-        self.output.insert(
-            tk.END,
-            "기능이 연결됩니다.\n"
-        )
+self.output.insert(
+    tk.END,
+    f"GAP숙주나물 : {result['GAP숙주나물']:.1f} kg\n"
+)
 
 
 def main():
