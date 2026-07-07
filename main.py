@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 
 from excel_reader import OrderReader
-
+from production import ProductionCalculator
 class FlowingFarmApp:
 
     def __init__(self, root):
